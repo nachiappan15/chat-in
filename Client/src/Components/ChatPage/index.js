@@ -7,7 +7,7 @@ import AccountSide from "./AccountSide";
 
 import ChatSide from "./ChatSide";
 import MobileChatView from "./MobileChatView";
-import AddFriend from "./AddFriend";
+import AddFriend from "./CreateRoom";
 
 
 
@@ -20,8 +20,19 @@ const ChatPage = () => {
   // stateManagement
   const [userDetails , setUserDetails] = React.useState({
     name : "", 
-    id : ""
+    id : "",
+    roomsData:[]
   })
+
+  //  Create room
+  const [createRoomElement , setCreateRoomElement] = React.useState(false);
+
+
+  // Active Chat Element
+
+  const [activeChatId , setActiveChatId] = React.useState("~vWMoszO-x")
+  
+  
 
   React.useEffect(()=> {
       console.log("running one time")
@@ -34,13 +45,22 @@ const ChatPage = () => {
       })
         .then(function (response) {
           const userData = response.data.user;
-          console.log(userData);
           if(userData){
             setUserDetails(userData) 
           }
         });
   } , [])
 
+  const elementAppear = () => {
+    setCreateRoomElement(prev => !prev)
+  }
+
+  // use effect
+  const changeActiveChat = (e)=> {
+    console.log(e);
+  }
+
+  
 
 
   return (
@@ -51,10 +71,16 @@ const ChatPage = () => {
      <div className=" h-full w-full  hidden md:flex ">
        {/* tablet and mobile view */}
        {/* left side */}
-       <AccountSide data={FriendsData}  name = {userDetails.name} id= {userDetails.id} />
+       <AccountSide   name = {userDetails.name} id= {userDetails.id} rooms = {userDetails.roomsData} elementAppear = {elementAppear} changeActiveChat= {changeActiveChat} />
        {/* right side */}
-       {/* <ChatSide data={FriendsData} /> */}
-       {/* <AddFriend/> */}
+      {
+        activeChatId &&  userDetails.roomsData.map( i=> {
+          if(i.RoomId == activeChatId ){
+           return <ChatSide chatRoomData= {i}/>
+          }
+        })
+      }
+       {createRoomElement && <AddFriend onClickHandler = {elementAppear} />}
      </div>
      {/* <MobileChatView data={FriendsData} /> */}
    </div>
@@ -70,3 +96,4 @@ const ChatPage = () => {
 
 export default ChatPage;
 
+{/*  */}

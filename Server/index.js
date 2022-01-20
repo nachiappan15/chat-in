@@ -153,24 +153,24 @@ app.get("/api/user/data/:id", async (req, res) => {
   BODY: USER Details
   ACCESS: PUBLIC 
   */
-app.post('/api/new/room', async (req, res) => {
+app.post('/api/room/new', async (req, res) => {
 
   try {
     const initialMembers = await User.findOne({
-      id: req.body.createrId
+      id: req.body.Admin
     });
 
     try {
       const room = await Room.create(
         {
-          name: req.body.name,
-          RoomId: shortid.generate() + "room",
+          name: req.body.RoomName,
+          RoomId:"~"+ shortid.generate(),
           member: initialMembers,
-          messages: req.body.messages
+          messages: req.body.Messages
         }
       )
       const updatedUser = await User.findOneAndUpdate({
-        id: req.body.createrId
+        id: req.body.Admin  
       }, {
         $push: {
           rooms: room._id
@@ -178,7 +178,7 @@ app.post('/api/new/room', async (req, res) => {
         }
       }
       );
-      res.json({ status: "ok", room: room });
+      res.json({ status: "ok", room: room , updatedUserData:updatedUser });
     } catch (error) {
       res.json({ status: "error", error: error });
     }

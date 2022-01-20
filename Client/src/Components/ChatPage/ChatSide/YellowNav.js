@@ -9,9 +9,9 @@ const YellowNav = (props) => {
       <span className="font-bold text-card cursor-pointer"  >
         <GrFormPrevious />
       </span>
-      <span className="font-bold text-card  ">Friend!</span>
+      <span className="font-bold text-card  ">{props.name}</span>
       <span className="text-xs font-bold text-layer1-100 bg-white  px-4 rounded-lg py-1">
-        #48674567
+       {props.id}
       </span>
     </div>
   );

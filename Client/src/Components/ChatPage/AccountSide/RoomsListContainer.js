@@ -16,7 +16,7 @@ const RoomsListContainer = (props) => {
           {
             props.rooms.map(i=> {
               return <>
-              <RoomCard {...i}/>
+              <RoomCard {...i} changeActiveChat = {props.changeActiveChat}/>
               </>
             }
             )
