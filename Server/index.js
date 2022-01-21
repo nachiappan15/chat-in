@@ -156,8 +156,11 @@ app.get("/api/user/data/:id", async (req, res) => {
 app.post('/api/room/new', async (req, res) => {
 
   try {
-    const initialMembers = await User.findOne({
-      id: req.body.Admin
+    const creator = await User.findOne({
+      id: req.body.creator
+    });
+    const fr = await User.findOne({
+      id: req.body.creator
     });
 
     try {
@@ -165,12 +168,13 @@ app.post('/api/room/new', async (req, res) => {
         {
           name: req.body.RoomName,
           RoomId:"~"+ shortid.generate(),
-          member: initialMembers,
+          member: [initialMembers , ],
           messages: req.body.Messages
         }
       )
+      // creator update
       const updatedUser = await User.findOneAndUpdate({
-        id: req.body.Admin  
+        id: req.body.creator  
       }, {
         $push: {
           rooms: room._id

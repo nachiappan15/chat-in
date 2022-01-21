@@ -6,7 +6,7 @@ import FriendsData from "../../DataHub/RoomData";
 import AccountSide from "./AccountSide";
 
 import ChatSide from "./ChatSide";
-import MobileChatView from "./MobileChatView";
+// import MobileChatView from "./MobileChatView";
 import AddFriend from "./CreateRoom";
 
 
@@ -30,7 +30,7 @@ const ChatPage = () => {
 
   // Active Chat Element
 
-  const [activeChatId , setActiveChatId] = React.useState("~vWMoszO-x")
+  const [activeChatId , setActiveChatId] = React.useState("")
   
   
 
@@ -57,7 +57,7 @@ const ChatPage = () => {
 
   // use effect
   const changeActiveChat = (e)=> {
-    console.log(e);
+    setActiveChatId(e.currentTarget.id)
   }
 
   
@@ -65,7 +65,6 @@ const ChatPage = () => {
 
   return (
     <>
-
     { id && 
      <div className="bg-layer2 h-screen w-full">
      <div className=" h-full w-full  hidden md:flex ">
@@ -75,8 +74,8 @@ const ChatPage = () => {
        {/* right side */}
       {
         activeChatId &&  userDetails.roomsData.map( i=> {
-          if(i.RoomId == activeChatId ){
-           return <ChatSide chatRoomData= {i}/>
+          if(i.RoomId === activeChatId ){
+           return <ChatSide chatRoomData= {i}  />
           }
         })
       }
@@ -85,11 +84,7 @@ const ChatPage = () => {
      {/* <MobileChatView data={FriendsData} /> */}
    </div>
 
-
-    }
-     
-
-      
+    }      
     </>
   );
 };

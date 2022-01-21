@@ -6,7 +6,8 @@ const AddFriend = (props) => {
     const [roomData, setRoomData] = React.useState(
         {
             RoomName: "",
-            Admin: "3Yp1E0JsC",
+            Creator: "3Yp1E0JsC",
+            Friend:"",
             Messages: []
         }
     )
@@ -61,15 +62,14 @@ const AddFriend = (props) => {
                             />
                         </div>
                         <div className='mt-4  w-full gap-2 flex flex-col  '>
-                            <label className='font-semibold text-defaultYellow '>Creator</label>
+                            <label className='font-semibold text-defaultYellow '>Friend</label>
                             <input
                                 type="text"
                                 className="w-full h-10  bg-layer2 px-4 rounded-md text-defaultYellow outline-none md:font-medium lg:font-semibold"
-                                placeholder="Admin"
-                                name="Admin"
+                                placeholder="Friend"
+                                onChange={enterData}
+                                name="Friend"
                                 required
-                                value={roomData.Admin}
-                                disabled
                             />
                         </div>
                     </div>

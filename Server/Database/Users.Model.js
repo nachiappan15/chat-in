@@ -54,8 +54,8 @@ const RoomsSchema = Mongoose.Schema({
                     type: String,
                     required: true
                 },
-                sentby: {
-                    type: String,
+                sent: {
+                    type: Boolean,
                     required: true
                 }
             }

@@ -12,9 +12,13 @@ const ChatSide = (props) => {
       <YellowNav name = {props.chatRoomData.name} id= {props.chatRoomData.RoomId} />
       <div className="w-95 h-56 flex-auto  mb-4 bg-layer1-500 rounded-lg flex flex-col ">
         <div className="  h-full flex  flex-col-reverse   lg:mx-8 md:mx-2  px-2 flex-nowrap overflow-scroll">
-          
-        
-
+          {
+              props.chatRoomData.messages.map(i=>{
+                console.log("message");
+                return <MessageCard {...i} />
+                
+              })
+          }
         </div>
         <div className=" h-10 lg:mx-8 md:mx-2 my-2  rounded-xl bg-white flex flex-nowrap justify-evenly overflow-hidden outline-none">
           <span className="w-full">
