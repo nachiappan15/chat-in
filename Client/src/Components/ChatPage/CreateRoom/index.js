@@ -1,12 +1,14 @@
 import React from 'react'
 import axios from "axios"
-
+import {useParams} from "react-router-dom"
 const AddFriend = (props) => {
+    const {id} = useParams();
+
     // statemanagement
     const [roomData, setRoomData] = React.useState(
         {
             RoomName: "",
-            Creator: "3Yp1E0JsC",
+            Creator: id,
             Friend:"",
             Messages: []
         }

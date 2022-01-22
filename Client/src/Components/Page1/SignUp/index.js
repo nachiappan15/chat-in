@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useJwt } from "react-jwt";
+
 // images
 import signUpImage from "../../../images/signup.svg";
 import Navbar from "./Navbar";
 
 const SignUp = () => {
   // state management
-  var token;
   const [signupData, setSignupData] = React.useState({
     name: "",
     email: "",
@@ -25,8 +24,6 @@ const SignUp = () => {
   // use signup data to pass to server
   const RegisterUser = async (event) => {
     event.preventDefault();
-   
-
 
     await axios({
       method: "post",
@@ -37,7 +34,7 @@ const SignUp = () => {
         var data = response.data;
         if (data.user) {
           var user = data.user;
-          window.location.href  = `chat/${user}`
+          window.location.href = `chat/${user}`;
         } else {
           console.log(data.error);
         }
@@ -45,8 +42,6 @@ const SignUp = () => {
       .catch(function (error) {
         console.log("error");
       });
-    
-   
   };
 
   return (

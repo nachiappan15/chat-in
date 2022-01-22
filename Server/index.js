@@ -3,11 +3,10 @@ import express from "express";
 import Mongoose from "mongoose";
 import shortid from "shortid";
 import bcrypt from "bcrypt";
-import cors from "cors"
-
+import cors from "cors";
 
 import { User } from "./Database/Users.Model.js";
-import { Room } from './Database/Users.Model.js';
+import { Room } from "./Database/Users.Model.js";
 
 // app config
 const app = express();
@@ -15,9 +14,7 @@ const port = 9000;
 
 // middlewares
 app.use(express.json());
-app.use(cors())
-
-
+app.use(cors());
 
 // actions
 const hashedPassword = (password) => {
@@ -27,7 +24,6 @@ const hashedPassword = (password) => {
 
   // return hashPassword;
 };
-
 
 // database config
 const connection_url =
@@ -40,9 +36,6 @@ console.log(Mongoose.connect(connection_url));
 app.get("/", (req, res) => {
   res.status(200).send("hello working....");
 });
-
-
-
 
 // -------------------------------AUTH ---------------------------
 
@@ -64,7 +57,7 @@ app.post("/api/addUser/new", async (req, res) => {
       password: hashedPassword(req.body.password),
       mobile: req.body.mobile,
       id: shortid.generate(),
-      rooms: []
+      rooms: [],
     });
 
     res.json({ status: "ok", user: user.id });
@@ -91,13 +84,12 @@ app.get("/", (req, res) => {
 app.post("/api/login", async (req, res) => {
   console.log("login....");
   const user = await User.findOne({
-    email: req.body.email
+    email: req.body.email,
   });
   // console.log(user);
   if (user) {
     const checkPassword = bcrypt.compareSync(req.body.password, user.password);
     if (checkPassword) {
-
       return res.json({ status: "ok", user: true, userId: user.id });
     } else {
       return res.json({
@@ -108,7 +100,11 @@ app.post("/api/login", async (req, res) => {
       });
     }
   } else {
-    return res.json({ status: "error", user: false, message: "user not found" });
+    return res.json({
+      status: "error",
+      user: false,
+      message: "user not found",
+    });
   }
 });
 
@@ -126,7 +122,7 @@ app.get("/api/user/data/:id", async (req, res) => {
   const { id } = req.params;
 
   const userData = await User.findOne({
-    id: id
+    id: id,
   }).populate("rooms");
   if (userData) {
     return res.json({
@@ -134,15 +130,11 @@ app.get("/api/user/data/:id", async (req, res) => {
       user: {
         name: userData.name,
         id: userData.id,
-        roomsData:userData.rooms
-      }
-
-    })
+        roomsData: userData.rooms,
+      },
+    });
   }
-
-})
-
-
+});
 
 // ------------------------ ROOMS ----------------------------------
 
@@ -153,44 +145,105 @@ app.get("/api/user/data/:id", async (req, res) => {
   BODY: USER Details
   ACCESS: PUBLIC 
   */
-app.post('/api/room/new', async (req, res) => {
-
+app.post("/api/room/new", async (req, res) => {
   try {
     const creator = await User.findOne({
-      id: req.body.creator
+      id: req.body.Creator,
     });
-    const fr = await User.findOne({
-      id: req.body.creator
+    const friend = await User.findOne({
+      id: req.body.Friend,
     });
 
     try {
-      const room = await Room.create(
-        {
-          name: req.body.RoomName,
-          RoomId:"~"+ shortid.generate(),
-          member: [initialMembers , ],
-          messages: req.body.Messages
-        }
-      )
+      const room = await Room.create({
+        name: req.body.RoomName,
+        RoomId: "~" + shortid.generate(),
+        member: [creator, friend],
+        messages: req.body.Messages,
+      });
       // creator update
-      const updatedUser = await User.findOneAndUpdate({
-        id: req.body.creator  
-      }, {
-        $push: {
-          rooms: room._id
-
+      const updatedCreator = await User.findOneAndUpdate(
+        {
+          id: req.body.Creator,
+        },
+        {
+          $push: {
+            rooms: room._id,
+          },
         }
-      }
       );
-      res.json({ status: "ok", room: room , updatedUserData:updatedUser });
+      const updatedFriend = await User.findOneAndUpdate(
+        {
+          id: req.body.Friend,
+        },
+        {
+          $push: {
+            rooms: room._id,
+          },
+        }
+      );
+      res.json({
+        status: "ok",
+        room: room,
+        updatedUserData: [updatedCreator, updatedFriend],
+      });
     } catch (error) {
       res.json({ status: "error", error: error });
     }
   } catch (error) {
     res.json({ status: "error", error: error });
   }
-})
+});
 
+// ----------------chat ---------------------------
+/*
+  METHOD :        PUT
+  URL:        /api/message/send
+  PARAMS: NONE
+  BODY: message Details
+  ACCESS: user 
+  */
+app.put("/api/message/send", async (req, res) => {
+  try {
+    const MessageUpdation = await Room.findOneAndUpdate(
+      {
+        id: req.body.RoomId,
+      },
+      {
+        $push: {
+          
+          messages: {
+            $each: [
+              {
+            text: req.body.text,
+            time: req.body.time,
+            sentBy: req.body.sentBy,
+          }
+        ],
+        $position: 0
+        }
+      }
+    },
+    {
+      new:true
+    }
+    );
+    //   const room = await Room.findOne({
+    //     RoomId:req.body.RoomId
+    //   })
+    //  res.json({
+    //     status : "ok" ,
+    //     room: room
+    //   })
+    console.log(MessageUpdation);
+    res.json({
+      status: "ok",
+      message: MessageUpdation,
+    });
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
 
 // listener
 
