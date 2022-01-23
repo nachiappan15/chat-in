@@ -5,6 +5,12 @@ import shortid from "shortid";
 import bcrypt from "bcrypt";
 import cors from "cors";
 
+// socket io
+import http from "http"
+import {Server} from "socket.io"
+
+
+
 import { User } from "./Database/Users.Model.js";
 import { Room } from "./Database/Users.Model.js";
 
@@ -12,9 +18,22 @@ import { Room } from "./Database/Users.Model.js";
 const app = express();
 const port = 9000;
 
+// socket.io
+const server = http.createServer(app);
+const io = new Server(server, { cors: { origin: '*' } });
+
+
+  io.on("connection", (socket) => {
+      console.log("user connected");
+    
+    });
+
+
+
 // middlewares
 app.use(express.json());
 app.use(cors());
+
 
 // actions
 const hashedPassword = (password) => {
@@ -25,11 +44,18 @@ const hashedPassword = (password) => {
   // return hashPassword;
 };
 
+
+
 // database config
 const connection_url =
   "mongodb+srv://admin:8af8S4fVwxGYeFb@cluster0.94hlu.mongodb.net/chatinDB?retryWrites=true&w=majority";
 Mongoose.connect(connection_url);
 console.log(Mongoose.connect(connection_url));
+
+// socket.io 
+
+
+
 
 // api routing
 
@@ -228,18 +254,16 @@ app.put("/api/message/send", async (req, res) => {
       new:true
     }
     );
-    //   const room = await Room.findOne({
-    //     RoomId:req.body.RoomId
-    //   })
-    //  res.json({
-    //     status : "ok" ,
-    //     room: room
-    //   })
-    console.log(MessageUpdation);
+
+
+    // socket.io
+    
+   
     res.json({
       status: "ok",
       message: MessageUpdation,
     });
+    io.emit("message",MessageUpdation)
   } catch (error) {
     res.json({ status: "error", error: error });
   }
@@ -247,6 +271,6 @@ app.put("/api/message/send", async (req, res) => {
 
 // listener
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log("Server Running.....✨✨");
 });

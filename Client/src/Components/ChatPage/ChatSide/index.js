@@ -8,10 +8,31 @@ import { useParams } from "react-router-dom";
 
 import axios from "axios";
 
+
+
+// socket.io client
+import io from "socket.io-client"
+
+
 const ChatSide = (props) => {
   const { id } = useParams();
   // state Management
   const [messages, setMessages] = React.useState(props.chatRoomData.messages);
+  const [socket,setSocket] = React.useState(null)
+
+
+  // useeffect
+  React.useEffect(()=>{
+    setSocket(io("http://localhost:9000"))
+    console.log("render");
+    console.log(socket);
+  },[])
+
+
+
+     
+ 
+
 
   const [messageData, setMessageData] = React.useState({
     RoomId: props.chatRoomData.RoomId,
@@ -48,7 +69,8 @@ const ChatSide = (props) => {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-
+    console.log("message sent");  
+   
     await axios({
       method: "put",
       url: "http://localhost:9000/api/message/send",
@@ -58,7 +80,9 @@ const ChatSide = (props) => {
         var data = response.data;
         console.log();
         if (data) {
-          setMessages(data.message.messages);
+          socket.on("message" , changedMessage=> {
+            setMessages(changedMessage.messages)
+          })
         } else {
           console.log(data.error);
         }
@@ -66,6 +90,7 @@ const ChatSide = (props) => {
       .catch(function (error) {
         console.log("error");
       });
+  
   };
 
   return (
@@ -77,7 +102,6 @@ const ChatSide = (props) => {
       <div className="w-95 h-56 flex-auto  mb-4 bg-layer1-500 rounded-lg flex flex-col ">
         <div className="  h-full flex  flex-col-reverse   lg:mx-8 md:mx-2  px-2 flex-nowrap overflow-scroll">
           {messages.map((i) => {
-            console.log("message");
             return <MessageCard {...i} />;
           })}
         </div>
