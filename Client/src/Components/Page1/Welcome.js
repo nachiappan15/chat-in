@@ -1,8 +1,8 @@
 import React from "react";
 import { Link , useLocation } from "react-router-dom";
 // images
-import logo from "../../../images/logo.png";
-import slogan from "../../../images/slogan.png";
+import logo from "../../images/logo.png";
+import slogan from "../../images/slogan.png";
 
 
 

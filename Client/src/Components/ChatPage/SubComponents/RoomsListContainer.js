@@ -14,9 +14,9 @@ const RoomsListContainer = (props) => {
         />
         <div className="flex-1 w-95  my-2 space-y-1  items-center overflow-scroll">
           {
-            props.rooms.map(i=> {
+            props.rooms.map(i => {
               return <>
-              <RoomCard {...i} changeActiveChat = {props.changeActiveChat}/>
+                <RoomCard {...i} changeActiveChat={props.changeActiveChat} />
               </>
             }
             )

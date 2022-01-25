@@ -23,10 +23,7 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
 
-  io.on("connection", (socket) => {
-      console.log("user connected");
-    
-    });
+  
 
 
 
@@ -149,7 +146,13 @@ app.get("/api/user/data/:id", async (req, res) => {
 
   const userData = await User.findOne({
     id: id,
-  }).populate("rooms");
+  }).populate({
+    path :"rooms" , 
+    select :{
+      name:1,
+      RoomId:1
+    }
+  });
   if (userData) {
     return res.json({
       status: "ok",
@@ -221,6 +224,34 @@ app.post("/api/room/new", async (req, res) => {
   }
 });
 
+
+/*
+  METHOD :        get
+  URL:        /api/get/room
+  PARAMS: RoomId
+  BODY: USER Details
+  ACCESS: PUBLIC 
+  */
+ app.get("/api/get/room/:RoomId" , async(req,res) => {
+   try {
+     const room  = await Room.findOne({
+       RoomId:req.params.RoomId
+     })
+    
+     if(room){
+       res.json({
+         status:"ok" ,
+         room:room
+       })
+     }
+   } catch (error) {
+     
+   }
+ })
+
+
+
+
 // ----------------chat ---------------------------
 /*
   METHOD :        PUT
@@ -233,7 +264,7 @@ app.put("/api/message/send", async (req, res) => {
   try {
     const MessageUpdation = await Room.findOneAndUpdate(
       {
-        id: req.body.RoomId,
+        RoomId: req.body.RoomId,
       },
       {
         $push: {

@@ -57,9 +57,13 @@ const RoomsSchema = Mongoose.Schema({
                 sentBy: {
                     type: String,
                     required: true
-                }
-            }
-        ]
+                },
+                
+            },
+        ],
+        
+
+
 
 },
     { collection: "RoomData" }

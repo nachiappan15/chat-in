@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 // images
-import signUpImage from "../../../images/signup.svg";
-import Navbar from "./Navbar";
+import signUpImage from "../../images/signup.svg";
+import Navbar from "../ReusableComponents/Navbar";
 
 const SignUp = () => {
   // state management

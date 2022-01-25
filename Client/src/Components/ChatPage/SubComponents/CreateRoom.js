@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from "axios"
 import {useParams} from "react-router-dom"
+
+
 const AddFriend = (props) => {
     const {id} = useParams();
 
@@ -13,11 +15,13 @@ const AddFriend = (props) => {
             Messages: []
         }
     )
+
     const enterData = (e) => {
         setRoomData((prev) => {
             return { ...prev, [e.target.name]: e.target.value };
         });
     };
+
 
     const createRoom = async (event) => {
         event.preventDefault();
@@ -42,9 +46,6 @@ const AddFriend = (props) => {
 
 
     }
-
-
-
 
     return (
         <>
@@ -91,10 +92,7 @@ const AddFriend = (props) => {
                         </button>
                     </div>
 
-
                 </form>
-
-
 
             </div>
         </>

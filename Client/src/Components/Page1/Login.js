@@ -2,62 +2,64 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // image
-import login from "../../../images/login.svg";
-import Navbar from "../SignUp/Navbar";
+import login from "../../images/login.svg";
+import Navbar from "../ReusableComponents/Navbar";
+
+
+
 const Login = () => {
   // state management
   const [loginData, setLoginData] = React.useState({
     email: "",
     password: "",
   });
-  const [paswordAlert , setPasswordAlert] = React.useState("")
+  const [paswordAlert, setPasswordAlert] = React.useState("")
+
+  // Actions
   const enterData = (e) => {
     setLoginData((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
 
-
-
   // login function
-    const loginUser = async (e) => {
-      console.log(loginData)
-        e.preventDefault();
-        // console.log("logging function");
-        // axios.get()
-        await axios({
-          method: "post",
-          url: "http://localhost:9000/api/login",
-          data: loginData,
-        })
-          .then(function (response) {
-            var data = response.data;
-            if (data.user) {
-              setPasswordAlert("");   
-              var userId = data.userId;
-              window.location.href  = `chat/${userId}`
-            } else {
-              console.log(data);
-              setPasswordAlert(data.message)
-            }
-          })
-          .catch(function (error) {
-            console.log("error");
-          });
-    }
+  const loginUser = async (e) => {
+    console.log(loginData)
+    e.preventDefault();
+    // console.log("logging function");
+    // axios.get()
+    await axios({
+      method: "post",
+      url: "http://localhost:9000/api/login",
+      data: loginData,
+    })
+      .then(function (response) {
+        var data = response.data;
+        if (data.user) {
+          setPasswordAlert("");
+          var userId = data.userId;
+          window.location.href = `chat/${userId}`
+        } else {
+          console.log(data);
+          setPasswordAlert(data.message)
+        }
+      })
+      .catch(function (error) {
+        console.log("error");
+      });
+  }
 
 
-  // console.log(loginData);
-
-  // use loginData to pass to backend
 
   return (
     <div className="h-full w-full flex flex-col md:flex-row gap-2 md:gap-0  ">
-      {/* avbar for small device */}
+      {/*navbar for small device */}
       <div className="block md:hidden mt-5">
         <Navbar />
       </div>
+
       <div className=" h-full w-full md:w-2/3  flex flex-col">
+        {/* navbar for other devices */}
         <div className="hidden md:block">
           <Navbar />
         </div>
@@ -94,12 +96,10 @@ const Login = () => {
                 </span>
               </Link>
             </span>
-            {paswordAlert &&<div className=" w-full text-center text-red-500">
-            <h2>{paswordAlert}</h2>
-          </div>}
+            {paswordAlert && <div className=" w-full text-center text-red-500">
+              <h2>{paswordAlert}</h2>
+            </div>}
           </div>
-
-          
         </form>
       </div>
 
@@ -111,6 +111,8 @@ const Login = () => {
         </div>
       </div>
     </div>
+
+
   );
 };
 

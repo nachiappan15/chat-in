@@ -1,6 +1,6 @@
 // logo
-import navLogo from "../../../images/navLogo.png";
-import signup from "../../../images/signup.svg";
+import navLogo from "../../images/navLogo.png";
+
 
 import React from "react";
 

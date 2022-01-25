@@ -9,7 +9,7 @@ routing --> react-router-dom
 icons --> react-icons
 
 
-front end.....
+front end..... ------completed
 
 Page1 ------>    
     ---Home page (Welcome.js) 
@@ -55,3 +55,18 @@ connect ----
 
         $2b$11$XtSdYj43e6SsutkTkuXYw.zxZjs5B7.fS.NDHfCCnTD1gh0692uEi
 $2b$11$qP.FIxRlNMkssOQ3zGUkjuG5tL2Ks6uy3dhoYOWIxBcqXj75iwxdq
+
+
+
+
+Actual logs
+
+Home page  ->  logi , signup
+
+login page  -> user authentication
+signup page -> user creation
+
+chat side  
+    user details  -> name ,user id, create room button , settings , AccountSide
+    Room list contaier - > rooms with name and id
+    

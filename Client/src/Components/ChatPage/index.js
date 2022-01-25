@@ -1,94 +1,98 @@
-import React from "react";
-import  {useParams}  from "react-router-dom";
-import axios from "axios";
-import FriendsData from "../../DataHub/RoomData";
+  import React from "react";
+  import { useParams } from "react-router-dom";
+  import axios from "axios";
 
-import AccountSide from "./AccountSide";
 
-import ChatSide from "./ChatSide";
-// import MobileChatView from "./MobileChatView";
-import AddFriend from "./CreateRoom";
-
+  import RoomsListContainer from "./SubComponents/RoomsListContainer";
+  import UserDetails from "./SubComponents/UserDetails";
+  import ChatSide from "./SubComponents/ChatSide";
+  import AddFriend from "./SubComponents/CreateRoom";
 
 
 
 
 
-const ChatPage = () => {
-  const {id} = useParams();
 
-  // stateManagement
-  const [userDetails , setUserDetails] = React.useState({
-    name : "", 
-    id : "",
-    roomsData:[]
-  })
+  const ChatPage = () => {
 
-  //  Create room
-  const [createRoomElement , setCreateRoomElement] = React.useState(false);
+    const { id } = useParams();
 
+    // stateManagement
+    const [userDetails, setUserDetails] = React.useState({
+      name: "",
+      id: "",
+      roomsData: []
+    })
+    const [activeChatId, setActiveChatId] = React.useState("")
+   
+    //  Create room
+    const [createRoomElement, setCreateRoomElement] = React.useState(false);
 
-  // Active Chat Element
+    // Active Chat Element
+    // const [activeChatId, setActiveChatId] = React.useState("")
 
-  const [activeChatId , setActiveChatId] = React.useState("")
-  
-  
-
-  React.useEffect(()=> {
-      console.log("running one time")
-      console.log(id);
-
+  // USEEFFECT
+    React.useEffect(() => {
       axios({
         method: 'get',
         url: `http://localhost:9000/api/user/data/${id} `
-        
+
       })
         .then(function (response) {
           const userData = response.data.user;
-          if(userData){
-            setUserDetails(userData) 
+          if (userData) {
+            setUserDetails(userData)
           }
         });
-  } , [])
+    }, [])
 
-  const elementAppear = () => {
-    setCreateRoomElement(prev => !prev)
-  }
-
-  // use effect
-  const changeActiveChat = (e)=> {
-    setActiveChatId(e.currentTarget.id)
-  }
-
-  
+    // React.useEffect( activeChatId && ActiveChatElement,[activeChatId])
 
 
-  return (
-    <>
-    { id && 
-     <div className="bg-layer2 h-screen w-full">
-     <div className=" h-full w-full  hidden md:flex ">
-       {/* tablet and mobile view */}
-       {/* left side */}
-       <AccountSide   name = {userDetails.name} id= {userDetails.id} rooms = {userDetails.roomsData} elementAppear = {elementAppear} changeActiveChat= {changeActiveChat} />
-       {/* right side */}
-      {
-        activeChatId &&  userDetails.roomsData.map( i=> {
-          if(i.RoomId === activeChatId ){
-           return <ChatSide chatRoomData= {i}  />
-          }
-        })
-      }
-       {createRoomElement && <AddFriend onClickHandler = {elementAppear} />}
-     </div>
-     {/* <MobileChatView data={FriendsData} /> */}
-   </div>
+    // actions
+    const elementAppear = () => {
+      setCreateRoomElement(prev => !prev)
+    }
+    const changeActiveChat = (e) => {
+      console.log(e.currentTarget.id);
+      console.log(activeChatId);
+      setActiveChatId(e.currentTarget.id)
+    
 
-    }      
-    </>
-  );
-};
+    }
+    const ActiveChatElement = () => {
+      return activeChatId && <ChatSide chatRoomId={activeChatId} />
+    }
+    
 
-export default ChatPage;
+    
 
-{/*  */}
+
+
+
+
+    return (
+      <>
+        {id &&
+          <div className="bg-layer2 h-screen w-full">
+            <div className=" h-full w-full  hidden md:flex ">
+              {/* tablet and mobile view */}
+              {/* left side */}
+              <div className="h-full w-3/12   flex flex-col items-center gap-3 py-2 ">
+                {/* user Details */}
+                <UserDetails name={userDetails.name} id={userDetails.id} elementAppear={elementAppear} />
+                {/* lower part */}
+                <RoomsListContainer rooms={userDetails.roomsData} changeActiveChat={changeActiveChat} />
+              </div>
+              {/* right side */}
+            <ActiveChatElement/>
+              {createRoomElement && <AddFriend onClickHandler={elementAppear} />}
+            </div>
+          </div>
+        }
+      </>
+    );
+  };
+
+  export default ChatPage;
+
