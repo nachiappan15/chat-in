@@ -28,9 +28,6 @@
     //  Create room
     const [createRoomElement, setCreateRoomElement] = React.useState(false);
 
-    // Active Chat Element
-    // const [activeChatId, setActiveChatId] = React.useState("")
-
   // USEEFFECT
     React.useEffect(() => {
       axios({
@@ -46,7 +43,6 @@
         });
     }, [])
 
-    // React.useEffect( activeChatId && ActiveChatElement,[activeChatId])
 
 
     // actions
@@ -64,11 +60,6 @@
       return activeChatId && <ChatSide chatRoomId={activeChatId} />
     }
     
-
-    
-
-
-
 
 
     return (

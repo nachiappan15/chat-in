@@ -1,8 +1,7 @@
+import React from "react";
 // logo
 import navLogo from "../../images/navLogo.png";
 
-
-import React from "react";
 
 const Navbar = () => {
   return (

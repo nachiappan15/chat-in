@@ -20,8 +20,7 @@ const SignUp = () => {
     });
   };
 
-  // console.log(signupData);
-  // use signup data to pass to server
+// actions
   const RegisterUser = async (event) => {
     event.preventDefault();
 
@@ -44,6 +43,8 @@ const SignUp = () => {
       });
   };
 
+
+  
   return (
     <div className="h-full w-full flex flex-col md:flex-row gap-2 md:gap-0  ">
       {/* avbar for small device */}

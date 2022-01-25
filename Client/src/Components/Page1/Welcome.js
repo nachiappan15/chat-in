@@ -1,5 +1,5 @@
 import React from "react";
-import { Link , useLocation } from "react-router-dom";
+import { Link  } from "react-router-dom";
 // images
 import logo from "../../images/logo.png";
 import slogan from "../../images/slogan.png";
@@ -7,8 +7,6 @@ import slogan from "../../images/slogan.png";
 
 
 const Wlecome = () => {
-  const {pathname} = useLocation();
-  console.log(pathname);
   return (
     <>
       <div className="flex basis-4/5 flex-col gap-2 items-center justify-center">
@@ -25,21 +23,20 @@ const Wlecome = () => {
         </div>
       </div>
       <div className="flex flex-col  gap-4 items-center justify-center">
-        {/*button container */}
+        {/*button container */}{/*login button*/}
         <Link to ="/login">
           <button className="lg:w-32 md:w-24 w-16 lg:h-8 h-6  lg:rounded-xl md:rounded-lg rounded-md lg:text-sm   text-xs  bg-defaultYellow    font-semibold text-cement hover:scale-110 ">
             LOG IN
           </button>
         </Link>
 
-        {/*login button*/}
+         {/*signup button*/}
         <Link to ="/signup">
         <button className="lg:w-32 md:w-24 w-16 lg:h-8 h-6 lg:rounded-xl md:rounded-lg rounded-md lg:text-sm   text-xs bg-white  font-semibold text-darkBlue hover:scale-110">
           SIGN UP
         </button>
         </Link>
        
-        {/*signup button*/}
       </div>
     </>
   );

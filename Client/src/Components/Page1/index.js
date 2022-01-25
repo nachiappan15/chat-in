@@ -1,8 +1,4 @@
 import React from "react";
-import Welcome from "./Welcome";
-import SignUp from "./SignUp";
-import Login from "./Login";
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,9 +6,12 @@ import {
   useLocation,
 } from "react-router-dom";
 
+import Welcome from "./Welcome";
+import SignUp from "./SignUp";
+import Login from "./Login";
+
 const Page1 = () => {
-  let path = useLocation();
-  console.log(path.pathname);
+
   return (
     <>
       <div className="bg-bckground h-screen w-full flex items-center justify-center">
@@ -28,7 +27,6 @@ const Page1 = () => {
               <Route exact path="login" element={<Login />}></Route>
             
           </Routes>
-          {/* <Welcome /> */}
         </div>
       </div>
     </>
