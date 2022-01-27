@@ -2,16 +2,10 @@
   import { useParams } from "react-router-dom";
   import axios from "axios";
 
-
   import RoomsListContainer from "./SubComponents/RoomsListContainer";
   import UserDetails from "./SubComponents/UserDetails";
   import ChatSide from "./SubComponents/ChatSide";
   import AddFriend from "./SubComponents/CreateRoom";
-
-
-
-
-
 
   const ChatPage = () => {
 

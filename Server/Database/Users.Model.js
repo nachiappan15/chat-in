@@ -30,45 +30,7 @@ const UsersSchema = Mongoose.Schema({
 {collection:"UserData"})
 
 
-const RoomsSchema = Mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    RoomId: {
-        type: String,
-        required: true
-    },
-    member: [
-        { type: Mongoose.Schema.Types.ObjectId, ref: "User" }
-
-    ],
-    messages:
-        [
-            {
-                text: {
-                    type: String,
-                    required: true
-                },
-                time: {
-                    type: String,
-                    required: true
-                },
-                sentBy: {
-                    type: String,
-                    required: true
-                },
-                
-            },
-        ],
-        
 
 
 
-},
-    { collection: "RoomData" }
-)
-
-export const Room =   Mongoose.model("Room", RoomsSchema)
-
-export const User =   Mongoose.model("User" , UsersSchema)
+export default  Mongoose.model("User" , UsersSchema)

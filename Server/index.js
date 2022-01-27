@@ -11,8 +11,8 @@ import {Server} from "socket.io"
 
 
 
-import { User } from "./Database/Users.Model.js";
-import { Room } from "./Database/Users.Model.js";
+import  User  from "./Database/Users.Model.js";
+import  Room  from "./Database/Rooms.Model.js";
 
 // app config
 const app = express();
