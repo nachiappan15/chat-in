@@ -1,7 +1,7 @@
 import React from "react";
 
 // icons
-import {FaUserFriends, FaUserAlt} from "react-icons/fa"
+import {FaPlus, FaUserAlt} from "react-icons/fa"
 import {AiFillSetting} from "react-icons/ai"
 
 
@@ -18,7 +18,7 @@ const UserDetails = (props) => {
         </div>
         <div className=" h-full w-full flex items-center lg:px-2 md:px-1">
           <button className=" bg-bckground lg:h-8 md:h-6 lg:px-4 md:px-2 lg:rounded-xl md:rounded-lg text-xs  text-black font-bold outline-none hover:scale-105 flex  items-center gap-1" onClick={props.elementAppear}>
-            Create Room <FaUserFriends />
+            Create Room <FaPlus />
           </button>
           <div className="h-full lg:px-4  flex lg:gap-2 items-center">
             {/* icon contsiner */}

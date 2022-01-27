@@ -7,6 +7,9 @@
   import ChatSide from "./SubComponents/ChatSide";
   import AddFriend from "./SubComponents/CreateRoom";
 
+  // socket.io
+  import io from "socket.io-client"
+
   const ChatPage = () => {
 
     const { id } = useParams();
@@ -18,7 +21,10 @@
       roomsData: []
     })
     const [activeChatId, setActiveChatId] = React.useState("")
-   
+    // socket
+    const [socket , setSocket] = React.useState(null);
+
+       
     //  Create room
     const [createRoomElement, setCreateRoomElement] = React.useState(false);
 
@@ -35,6 +41,7 @@
             setUserDetails(userData)
           }
         });
+        setSocket(io.connect("http://localhost:9000"))
     }, [])
 
 
@@ -51,7 +58,7 @@
 
     }
     const ActiveChatElement = () => {
-      return activeChatId && <ChatSide chatRoomId={activeChatId} />
+      return activeChatId && <ChatSide chatRoomId={activeChatId} socket =  {socket} />
     }
     
 

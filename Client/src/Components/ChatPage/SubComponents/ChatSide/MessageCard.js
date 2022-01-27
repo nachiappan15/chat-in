@@ -9,12 +9,17 @@ const MessageCard = (props) => {
   }
 
   return (
-    <div className={`w-full flex ${sent ? `flex-row-reverse`:`flex-row`}`}>
+    <div className={`w-full flex my-1 ${sent ? `flex-row-reverse`:`flex-row`}`}>
+      <div>
+        {/* <span className="w-full  text-xs     mb-1 text-snowWhite  font-light">#{props.sentBy}</span> */}
       <div className={`lg:max-w-lg md:max-w-md  gap-2  rounded-lg   left-2  flex  flex-col justify-between ${sent ? `bg-search text-defaultYellow`  :`bg-snowWhite text-card`}  lg:px-2    font-medium text-sm`}>
-        <span className=" mt-2">{props.text}</span>
-        <span className="w-full  text-xs  flex flex-row-reverse pr-2 mb-1  font-light">{props.time}</span>
+        <span className="py-1">{props.text}</span>
+        
       </div>
-    </div>
+      <span className="w-full  text-xs  flex flex-row-reverse pr-2 mb-1 text-snowWhite  font-light">{props.time}</span>
+    
+      </div>
+      </div>
   );
 };
 

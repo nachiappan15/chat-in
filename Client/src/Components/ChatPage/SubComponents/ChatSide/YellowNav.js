@@ -2,6 +2,7 @@ import React from "react";
 
 import { GrFormPrevious } from "react-icons/gr";
 import { GiTimeBomb } from "react-icons/gi";
+import {BsPeopleFill} from "react-icons/bs"
 
 const YellowNav = (props) => {
   return (
@@ -13,6 +14,10 @@ const YellowNav = (props) => {
       <span className="text-xs font-bold text-layer1-100 bg-white  px-4 rounded-lg py-1">
        {props.id}
       </span>
+      <div className="cursor-pointer" >
+      <BsPeopleFill/> 
+      </div>
+      
     </div>
   );
 };

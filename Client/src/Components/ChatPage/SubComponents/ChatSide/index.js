@@ -2,8 +2,7 @@ import React from "react";
 import axios from "axios";
 import reactDom from "react-dom"
 
-// socket.io client
-import io from "socket.io-client"
+
 
 import YellowNav from "./YellowNav";
 
@@ -11,6 +10,8 @@ import YellowNav from "./YellowNav";
 import { IoSendSharp } from "react-icons/io5";
 import MessageCard from "./MessageCard";
 import { useParams } from "react-router-dom";
+
+// socket code
 
 
 
@@ -26,12 +27,10 @@ const ChatSide = (props) => {
     "name": "",
     "RoomId": "",
     "member": [
-
     ],
     "messages": [],
   })
   const [messages, setMessages] = React.useState(roomData.messages);
-  const [socket, setSocket] = React.useState(null)
   const [messageData, setMessageData] = React.useState({
     RoomId: props.chatRoomId,
     text: "",
@@ -39,9 +38,17 @@ const ChatSide = (props) => {
     sentBy: id,
   });
 
+  // console.log(props.socket);
+
   // useEffect
   React.useEffect(() => {
     // making api call for room
+    
+    // socket
+    props.socket.emit("join_room", props.chatRoomId);
+
+
+
     axios({
       method: 'get',
       url: `http://localhost:9000/api/get/room/${props.chatRoomId}`
@@ -50,23 +57,35 @@ const ChatSide = (props) => {
       .then(function (response) {
         const gotroomData = response.data.room;
         if (gotroomData) {
-
           setRoomData(gotroomData)
           setMessages(gotroomData.messages)
         }
       });
     // websocket
-    setSocket(io.connect("http://localhost:9000"))
+    // console.log(roomData.RoomId);
+    
+   
 
   }, [])
 
   // Socket useEffect
-  React.useEffect(() => {
-    socket && socket.on("message", changedMessage => {
-      setMessages(changedMessage.messages)
-    })
-  }, [socket])
+  // React.useEffect(() => {
+  //   console.log(socket);
+  //   socket && socket.on("message", (data) => {
+  //     if(data.RoomId === roomData.RoomId){
+  //       console.log(data.updatedMessage);
+  //     }
+  //   })
+  // }, [socket])
 
+
+  props.socket.on("message" , (data)=> {
+    if(data.RoomId === props.chatRoomId){
+      setMessages( data.updatedMessage)
+    }
+  })
+
+  
 
   // time
   const getTime = () => {
@@ -96,6 +115,8 @@ const ChatSide = (props) => {
   const sendMessage = async (e) => {
 
     e.preventDefault();
+
+
     if (messageData.text) {
     e.target.children[0].children[0].value = "";
       await axios({
@@ -107,7 +128,7 @@ const ChatSide = (props) => {
           var data = response.data;
 
           if (data) {
-
+            
           } else {
             console.log(data.error);
           }

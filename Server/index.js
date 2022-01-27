@@ -23,7 +23,16 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
 
-  
+io.on("connection", (socket) => {
+  // console.log(socket);
+  console.log("user" , socket.id , "connected");
+
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+});
+
 
 
 
@@ -285,16 +294,17 @@ app.put("/api/message/send", async (req, res) => {
       new:true
     }
     );
-
-
-    // socket.io
-    
+   
    
     res.json({
       status: "ok",
       message: MessageUpdation,
     });
-    io.emit("message",MessageUpdation)
+    io.emit("message",{
+      
+      RoomId :  req.body.RoomId,
+      updatedMessage : MessageUpdation.messages
+    })
   } catch (error) {
     res.json({ status: "error", error: error });
   }
