@@ -2,26 +2,21 @@ import React from "react";
 import axios from "axios";
 import reactDom from "react-dom"
 
-
-
-import YellowNav from "./YellowNav";
+import YellowNav from "../../ReusableComponents/YellowNav";
+import RoomMembers from "./RoomMembers"
 
 // icons
 import { IoSendSharp } from "react-icons/io5";
-import MessageCard from "./MessageCard";
+import MessageCard from "../../ReusableComponents/MessageCard";
 import { useParams } from "react-router-dom";
 
 // socket code
 
 
-
-
-
-
 const ChatSide = (props) => {
 
   const { id } = useParams();
-  console.log(props);
+
   // state Management
   const [roomData, setRoomData] = React.useState({
     "name": "",
@@ -30,29 +25,32 @@ const ChatSide = (props) => {
     ],
     "messages": [],
   })
+
   const [messages, setMessages] = React.useState(roomData.messages);
   const [messageData, setMessageData] = React.useState({
     RoomId: props.chatRoomId,
-    userName:props.userName,
+    userName: props.userName,
     text: "",
     time: "",
     sentBy: id,
   });
 
-  // console.log(props.socket);
+  const [FloatingCardRender, setFloatingCardRender] = React.useState(false);
+  const elementAppear = (content) => {
+    console.log(content);
+    setFloatingCardRender(prev => !prev)
+  }
+
 
   // useEffect
   React.useEffect(() => {
-    // making api call for room
-    
     // socket
     props.socket.emit("join_room", props.chatRoomId);
 
-
-
+    // making api call for room
     axios({
       method: 'get',
-      url: `http://localhost:9000/api/get/room/${props.chatRoomId}`
+      url: `http://localhost:9000/room/getRoom/${props.chatRoomId}`
 
     })
       .then(function (response) {
@@ -62,31 +60,19 @@ const ChatSide = (props) => {
           setMessages(gotroomData.messages)
         }
       });
-    // websocket
-    // console.log(roomData.RoomId);
-    
-   
 
   }, [])
 
-  // Socket useEffect
-  // React.useEffect(() => {
-  //   console.log(socket);
-  //   socket && socket.on("message", (data) => {
-  //     if(data.RoomId === roomData.RoomId){
-  //       console.log(data.updatedMessage);
-  //     }
-  //   })
-  // }, [socket])
 
 
-  props.socket.on(props.chatRoomId , (data)=> {
+
+  props.socket.on(props.chatRoomId, (data) => {
     // if(data.RoomId === ){
-      setMessages( data.updatedMessage)
+    setMessages(data.updatedMessage)
     // }
   })
 
-  
+
 
   // time
   const getTime = () => {
@@ -116,10 +102,8 @@ const ChatSide = (props) => {
   const sendMessage = async (e) => {
 
     e.preventDefault();
-
-
     if (messageData.text) {
-    e.target.children[0].children[0].value = "";
+      e.target.children[0].children[0].value = "";
       await axios({
         method: "put",
         url: "http://localhost:9000/api/message/send",
@@ -129,7 +113,7 @@ const ChatSide = (props) => {
           var data = response.data;
 
           if (data) {
-            
+
           } else {
             console.log(data.error);
           }
@@ -146,6 +130,7 @@ const ChatSide = (props) => {
       <YellowNav
         name={roomData.name}
         id={roomData.RoomId}
+        elementAppear={elementAppear}
       />
       <div className="w-95 h-56 flex-auto  mb-4 bg-layer1-500 rounded-lg flex flex-col ">
         <div className="  h-full flex  flex-col-reverse   lg:mx-8 md:mx-2  px-2 flex-nowrap overflow-scroll">
@@ -161,24 +146,27 @@ const ChatSide = (props) => {
           className=" h-10 lg:mx-8 md:mx-2 my-2  rounded-xl bg-white flex flex-nowrap justify-evenly overflow-hidden outline-none"
           onSubmit={sendMessage}
         >
-        <span className="w-full">
-          <input
-            type="text"
-            className="w-full h-full px-4 "
-            name="text"
-            id="messageText"
-            onChange={enterData}
-            autoComplete = "off"
-          />
-        </span>
-        <button
-          type="submit"
-          className="h-full w-16 bg-defaultYellow flex items-center justify-center cursor-pointer"
-        >
-          <IoSendSharp className="focus:scale-150 duration-700" size={20} />
-        </button>
-      </form>
-    </div>
+          <span className="w-full">
+            <input
+              type="text"
+              className="w-full h-full px-4 "
+              name="text"
+              id="messageText"
+              onChange={enterData}
+              autoComplete="off"
+            />
+          </span>
+          <button
+            type="submit"
+            className="h-full w-16 bg-defaultYellow flex items-center justify-center cursor-pointer"
+          >
+
+            <IoSendSharp className="focus:scale-150 duration-700" size={20} />  
+
+          </button>
+        </form>
+      </div>
+      {FloatingCardRender && <RoomMembers members = {roomData.member} onClickHandler = {elementAppear}/>}
     </div >
   );
 };

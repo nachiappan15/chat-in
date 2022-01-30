@@ -26,7 +26,7 @@ const SignUp = () => {
 
     await axios({
       method: "post",
-      url: "http://localhost:9000/api/addUser/new",
+      url: "http://localhost:9000/auth/addUser/new",
       data: signupData,
     })
       .then(function (response) {

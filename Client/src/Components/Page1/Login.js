@@ -31,7 +31,7 @@ const Login = () => {
     // axios.get()
     await axios({
       method: "post",
-      url: "http://localhost:9000/api/login",
+      url: "http://localhost:9000/auth/login",
       data: loginData,
     })
       .then(function (response) {

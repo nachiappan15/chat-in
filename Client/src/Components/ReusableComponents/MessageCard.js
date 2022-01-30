@@ -7,8 +7,6 @@ const MessageCard = (props) => {
   if(props.sentBy == id){
     sent = true
   }
-
-  console.log(props);
   return (
     <div className={`w-full flex my-1 ${sent ? `flex-row-reverse`:`flex-row`}`}>
       <div>

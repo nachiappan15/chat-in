@@ -3,7 +3,7 @@ import React from 'react'
 const RoomCard = (props) => {
     return (
       <>
-        <div className=" w-full lg:px-5 px-2 lg:py-2 py-1 flex flex-col bg-layer1-600  text-snowWhite rounded-md hover:bg-defaultYellow hover:text-card  hover:rounded-lg cursor-pointer" id = {props.RoomId} onClick={props.changeActiveChat} >
+        <div className=" w-full lg:px-5 px-2 lg:py-2 py-1 flex flex-col bg-layer1-600  text-snowWhite rounded-md hover:bg-defaultYellow hover:text-card  hover:rounded-lg cursor-pointer"  onClick={()=>{props.changeActiveChat(props.RoomId)}} >
           {/* freined details */}
           <div className="flex justify-between items-center h-8">
               <p className="lg:text-lg md:text-sm  text-lg  font-bold ">{props.name}</p>

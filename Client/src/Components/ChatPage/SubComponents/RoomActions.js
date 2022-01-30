@@ -2,8 +2,7 @@ import React from 'react'
 import axios from "axios"
 import {useParams} from "react-router-dom"
 
-
-const AddFriend = (props) => {
+const RoomActions = (props) => {
     const {id} = useParams();
 
     // statemanagement
@@ -99,4 +98,4 @@ const AddFriend = (props) => {
     )
 }
 
-export default AddFriend
+export default RoomActions

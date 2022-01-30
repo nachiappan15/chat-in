@@ -1,7 +1,6 @@
 import React from "react";
 
 import { GrFormPrevious } from "react-icons/gr";
-import { GiTimeBomb } from "react-icons/gi";
 import {BsPeopleFill} from "react-icons/bs"
 import {BiDotsVerticalRounded} from "react-icons/bi"
 
@@ -15,11 +14,8 @@ const YellowNav = (props) => {
       <span className="text-xs font-bold text-layer1-100 bg-white  px-4 rounded-lg py-1">
        {props.id}
       </span>
-      <div className="cursor-pointer" >
+      <div className="cursor-pointer"  onClick={props.elementAppear} >
       <BsPeopleFill/> 
-      </div>
-      <div className=" ml-auto cursor-pointer ">
-        <BiDotsVerticalRounded/>
       </div>
     </div>
   );
