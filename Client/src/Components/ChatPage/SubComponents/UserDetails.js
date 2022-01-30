@@ -3,7 +3,7 @@ import React from "react";
 // icons
 import {FaPlus, FaUserAlt} from "react-icons/fa"
 import {AiFillSetting} from "react-icons/ai"
-
+import {IoNotificationsSharp } from "react-icons/io5"
 
 const UserDetails = (props) => {
   return (
@@ -17,7 +17,7 @@ const UserDetails = (props) => {
           <p className="font-medium lg:text-sm md:text-xs text-stone-400">#{props.id}</p>
         </div>
         <div className=" h-full w-full flex items-center lg:px-2 md:px-1">
-          <button className=" bg-bckground lg:h-8 md:h-6 lg:px-4 md:px-2 lg:rounded-xl md:rounded-lg text-xs  text-black font-bold outline-none hover:scale-105 flex  items-center gap-1" onClick={props.elementAppear}>
+          <button className=" bg-bckground lg:h-8 md:h-10 lg:px-4 md:px-2 lg:rounded-xl md:rounded-lg text-xs  text-black font-bold outline-none hover:scale-105 flex  items-center gap-1" onClick={props.elementAppear}>
             Create Room <FaPlus />
           </button>
           <div className="h-full lg:px-4  flex lg:gap-2 items-center">
@@ -31,6 +31,12 @@ const UserDetails = (props) => {
             <div className="h-10 w-10 bg-layer1  rounded-2xl text-snowWhite flex justify-center items-center  ">
               <FaUserAlt
                 size={15}
+                className="hover:scale-125 duration-1000 cursor-pointer "
+              />
+            </div>
+            <div className="h-10 w-10 bg-layer1  rounded-2xl text-snowWhite flex justify-center items-center  ">
+              <IoNotificationsSharp
+                size={20}
                 className="hover:scale-125 duration-1000 cursor-pointer "
               />
             </div>

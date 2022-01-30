@@ -70,3 +70,9 @@ chat side
     user details  -> name ,user id, create room button , settings , AccountSide
     Room list contaier - > rooms with name and id
      bug in chat connection betwen rooms in messages stat in client to chceck active room state before state change
+
+
+
+     28 /1/2022
+
+     settings , profile , Room  Search , display members , adding deleting members ,  deletig Rooms

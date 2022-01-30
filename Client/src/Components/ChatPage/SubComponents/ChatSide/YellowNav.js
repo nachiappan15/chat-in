@@ -3,6 +3,7 @@ import React from "react";
 import { GrFormPrevious } from "react-icons/gr";
 import { GiTimeBomb } from "react-icons/gi";
 import {BsPeopleFill} from "react-icons/bs"
+import {BiDotsVerticalRounded} from "react-icons/bi"
 
 const YellowNav = (props) => {
   return (
@@ -17,7 +18,9 @@ const YellowNav = (props) => {
       <div className="cursor-pointer" >
       <BsPeopleFill/> 
       </div>
-      
+      <div className=" ml-auto cursor-pointer ">
+        <BiDotsVerticalRounded/>
+      </div>
     </div>
   );
 };

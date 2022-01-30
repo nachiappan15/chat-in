@@ -18,6 +18,9 @@ import  Room  from "./Database/Rooms.Model.js";
 const app = express();
 const port = 9000;
 
+
+
+
 // socket.io
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
@@ -271,6 +274,7 @@ app.post("/api/room/new", async (req, res) => {
   */
 app.put("/api/message/send", async (req, res) => {
   try {
+   
     const MessageUpdation = await Room.findOneAndUpdate(
       {
         RoomId: req.body.RoomId,
@@ -283,7 +287,9 @@ app.put("/api/message/send", async (req, res) => {
               {
             text: req.body.text,
             time: req.body.time,
-            sentBy: req.body.sentBy,
+            senderName  : req.body.userName,
+            sentBy: req.body.sentBy
+            
           }
         ],
         $position: 0
@@ -300,7 +306,8 @@ app.put("/api/message/send", async (req, res) => {
       status: "ok",
       message: MessageUpdation,
     });
-    io.emit("message",{
+    // console.log(MessageUpdation);
+    io.emit(req.body.RoomId,{
       
       RoomId :  req.body.RoomId,
       updatedMessage : MessageUpdation.messages

@@ -8,10 +8,11 @@ const MessageCard = (props) => {
     sent = true
   }
 
+  console.log(props);
   return (
     <div className={`w-full flex my-1 ${sent ? `flex-row-reverse`:`flex-row`}`}>
       <div>
-        {/* <span className="w-full  text-xs     mb-1 text-snowWhite  font-light">#{props.sentBy}</span> */}
+        <span className="w-full  text-xs     mb-1 text-snowWhite  font-light">{props.senderName}</span>
       <div className={`lg:max-w-lg md:max-w-md  gap-2  rounded-lg   left-2  flex  flex-col justify-between ${sent ? `bg-search text-defaultYellow`  :`bg-snowWhite text-card`}  lg:px-2    font-medium text-sm`}>
         <span className="py-1">{props.text}</span>
         

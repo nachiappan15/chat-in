@@ -58,7 +58,7 @@
 
     }
     const ActiveChatElement = () => {
-      return activeChatId && <ChatSide chatRoomId={activeChatId} socket =  {socket} />
+      return activeChatId && <ChatSide chatRoomId={activeChatId} socket =  {socket} userName={userDetails.name} />
     }
     
 

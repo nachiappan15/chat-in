@@ -21,7 +21,7 @@ import { useParams } from "react-router-dom";
 const ChatSide = (props) => {
 
   const { id } = useParams();
-
+  console.log(props);
   // state Management
   const [roomData, setRoomData] = React.useState({
     "name": "",
@@ -33,6 +33,7 @@ const ChatSide = (props) => {
   const [messages, setMessages] = React.useState(roomData.messages);
   const [messageData, setMessageData] = React.useState({
     RoomId: props.chatRoomId,
+    userName:props.userName,
     text: "",
     time: "",
     sentBy: id,
@@ -79,10 +80,10 @@ const ChatSide = (props) => {
   // }, [socket])
 
 
-  props.socket.on("message" , (data)=> {
-    if(data.RoomId === props.chatRoomId){
+  props.socket.on(props.chatRoomId , (data)=> {
+    // if(data.RoomId === ){
       setMessages( data.updatedMessage)
-    }
+    // }
   })
 
   

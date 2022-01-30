@@ -24,6 +24,10 @@ const RoomsSchema = Mongoose.Schema({
                     type: String,
                     required: true
                 },
+                senderName:{
+                    type: String,
+                    required: true
+                },
                 sentBy: {
                     type: String,
                     required: true
