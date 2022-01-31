@@ -8,10 +8,11 @@ import RoomCard from "../SubComponents/RoomCard"
 
 
 const CreateRoomElements = (props) => {
-    const { id } = useParams();
+
 
     // statemanagement
 
+    const { id } = useParams();
 
     const [roomData, setRoomData] = React.useState(
         {
@@ -33,7 +34,7 @@ const CreateRoomElements = (props) => {
         event.preventDefault();
         await axios({
             method: "post",
-            url: "http://localhost:9000/api/room/new",
+            url: "http://localhost:9000/room/new",
             data: roomData,
         })
             .then(function (response) {
@@ -108,8 +109,8 @@ const JoinRoomElement = (props) => {
 
 
     const [roomId, setRoomId] = React.useState("")
-    const [FoundRoomData ,setFoundRoomData] = React.useState(null)
-    const [notFound , setNotFound] = React.useState("")
+    const [FoundRoomData, setFoundRoomData] = React.useState(null)
+    const [notFound, setNotFound] = React.useState("")
 
     const enterData = (e) => {
         setRoomId(e.target.value)
@@ -126,6 +127,7 @@ const JoinRoomElement = (props) => {
                 console.log(response.data.roomData);
                 var data = response.data;
                 if (data.roomData) {
+                    setNotFound("")
                     setFoundRoomData(data.roomData)
                 } else {
                     setNotFound(data.message)
@@ -138,16 +140,42 @@ const JoinRoomElement = (props) => {
 
     }
 
+
     const FoundRoom = (props) => {
+
+        const { id } = useParams();
+        const Join = (roomId) => {
+            console.log(roomId)
+            console.log(id);
+
+
+            // await axios({
+            //     method: "get",
+            //     url: `http://localhost:9000/room/findRoom/${roomId}`,
+            // })
+            //     .then(function (response) {
+            //         console.log(response.data.roomData);
+            //         var data = response.data;
+            //         if (data.roomData) {
+            //             setFoundRoomData(data.roomData)
+            //         } else {
+            //             setNotFound(data.message)
+            //         }
+            //     })
+            //     .catch(function (error) {
+            //         console.log("error");
+            //     });
+        }
+
         return <>
-            <div className=" w-full lg:px-5 px-2 lg:py-2 py-1 flex  items-center justify-between bg-layer1-600  text-snowWhite rounded-md   cursor-pointer" onClick={() => { props.changeActiveChat(props.RoomId) }} >
+            <div className=" w-full lg:px-5 px-2 lg:py-2 py-1 flex  items-center justify-between bg-layer1-600  text-snowWhite rounded-md   cursor-pointer" >
                 {/* freined details */}
                 <div className="flex gap-16 items-center h-8">
                     <p className="lg:text-lg md:text-sm  text-lg  font-bold ">{props.name}</p>
                     <p className="lg:text-sm md:text-xs text-sm font-medium text-slate-600">{props.RoomId}</p>
                 </div>
                 <div>
-                    <button className=' bg-defaultYellow px-2 py-1 rounded-md text-card font-bold    text-sm '>
+                    <button className=' bg-defaultYellow px-2 py-1 rounded-md text-card font-bold hover:scale-125   text-sm ' onClick={() => Join(props.RoomId)} >
                         Join
                     </button>
                 </div>
@@ -192,10 +220,10 @@ const JoinRoomElement = (props) => {
         </form>
         {/* RoomDisplay */}
         <div className=' w-2/3 h-full rounded-md my-2 bg-layer1-700 flex flex-col gap-1 items-center  px-3 py-2 overflow-hidden'>
-           {FoundRoomData && <FoundRoom {...FoundRoomData}/>}
-           {
-               notFound && <span className='text-red-600 text-lg font-medium'>{notFound}</span>
-           }
+            {FoundRoomData && <FoundRoom {...FoundRoomData} />}
+            {
+                notFound && <span className='text-red-600 text-lg font-medium'>{notFound}</span>
+            }
         </div>
 
     </>
