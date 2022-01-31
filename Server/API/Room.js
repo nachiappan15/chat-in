@@ -131,7 +131,7 @@ router.get("/findRoom/:RoomId", async (req, res) => {
 })
 
 // Join in found Rooom
-router.get("/joinRoom", async (req, res) => {
+router.put("/joinRoom", async (req, res) => {
     try {
         const user = await User.findOne({
             id: req.body.userId

@@ -6,14 +6,13 @@ import RoomCard from "../SubComponents/RoomCard"
 
 
 
-
+// UI for create Room
 const CreateRoomElements = (props) => {
-
-
     // statemanagement
 
     const { id } = useParams();
 
+    // State Management
     const [roomData, setRoomData] = React.useState(
         {
             RoomName: "",
@@ -29,7 +28,7 @@ const CreateRoomElements = (props) => {
         });
     };
 
-
+    // API for creating Room
     const createRoom = async (event) => {
         event.preventDefault();
         await axios({
@@ -101,13 +100,10 @@ const CreateRoomElements = (props) => {
     </>
 }
 
-
+// UI for finding Room
 const JoinRoomElement = (props) => {
-    // const { id } = useParams();
 
     // statemanagement
-
-
     const [roomId, setRoomId] = React.useState("")
     const [FoundRoomData, setFoundRoomData] = React.useState(null)
     const [notFound, setNotFound] = React.useState("")
@@ -116,6 +112,7 @@ const JoinRoomElement = (props) => {
         setRoomId(e.target.value)
     };
 
+    // APi for finding Room
     const FindRoom = async (event) => {
         // console.log(roomI);
         event.preventDefault();
@@ -140,31 +137,35 @@ const JoinRoomElement = (props) => {
 
     }
 
-
+    // UI for foud rooom card
     const FoundRoom = (props) => {
 
         const { id } = useParams();
-        const Join = (roomId) => {
-            console.log(roomId)
-            console.log(id);
 
+        // API for jin in found Room
+        const Join = async (roomId) => {
+            await axios({
+                method: "put",
+                url: `http://localhost:9000/room/joinRoom`,
+                data:
+                {
+                    RoomId: roomId,
+                    userId: id
+                }
 
-            // await axios({
-            //     method: "get",
-            //     url: `http://localhost:9000/room/findRoom/${roomId}`,
-            // })
-            //     .then(function (response) {
-            //         console.log(response.data.roomData);
-            //         var data = response.data;
-            //         if (data.roomData) {
-            //             setFoundRoomData(data.roomData)
-            //         } else {
-            //             setNotFound(data.message)
-            //         }
-            //     })
-            //     .catch(function (error) {
-            //         console.log("error");
-            //     });
+            })
+                .then(function (response) {
+                    var data = response.data;
+                    console.log(data);
+                    if (data.status == "ok") {
+                        props.onClickHandler()
+                    } else {
+                        setNotFound(data.messagae)
+                    }
+                })
+                .catch(function (error) {
+                    console.log("error");
+                });
         }
 
         return <>
@@ -220,7 +221,7 @@ const JoinRoomElement = (props) => {
         </form>
         {/* RoomDisplay */}
         <div className=' w-2/3 h-full rounded-md my-2 bg-layer1-700 flex flex-col gap-1 items-center  px-3 py-2 overflow-hidden'>
-            {FoundRoomData && <FoundRoom {...FoundRoomData} />}
+            {FoundRoomData && <FoundRoom {...FoundRoomData} onClickHandler={props.onClickHandler} />}
             {
                 notFound && <span className='text-red-600 text-lg font-medium'>{notFound}</span>
             }
@@ -232,27 +233,29 @@ const JoinRoomElement = (props) => {
 
 
 
-
+// Master UI 
 const RoomActions = (props) => {
-    const [createRoomRender, setCreateRoomRender] = React.useState("CreateRoom");
+
+    // togle data for two tabs
+    const [ActiveTab, setActiveTab] = React.useState("CreateRoom");
 
 
     const toggleRoomAction = (option) => {
 
-        if (createRoomRender !== option) {
+        if (ActiveTab !== option) {
             console.log(option);
-            setCreateRoomRender(option)
+            setActiveTab(option)
         }
 
     }
-    // console.log(createRoomRender);
+    // console.log(ActiveTab);
 
 
 
 
 
     const ElementToAppear = () => {
-        switch (createRoomRender) {
+        switch (ActiveTab) {
             case "CreateRoom":
                 return <CreateRoomElements onClickHandler={props.onClickHandler} />
 
@@ -268,8 +271,8 @@ const RoomActions = (props) => {
         <>
             <div className='mx-auto my-auto rounded-3xl h-70p w-90 max-w-3xl bg-layer1-600 flex flex-col items-center absolute top-0 left-0 right-0 bottom-0'>
                 <div className='w-full flex  justify-center items-center gap-4 m-4'>
-                    <button className={`text-lg font-bold   ${createRoomRender === "CreateRoom" ? "bg-defaultYellow text-card" : "bg-card  text-snowWhite"} px-2 h-8 rounded-md`} onClick={() => toggleRoomAction("CreateRoom")}> Create Room</button>
-                    <button className={`text-lg font-bold   ${createRoomRender === "JoinRoom" ? "bg-defaultYellow text-card" : "bg-card  text-snowWhite"} px-2 h-8 rounded-md`} onClick={() => toggleRoomAction("JoinRoom")}> Join Room</button>
+                    <button className={`text-lg font-bold   ${ActiveTab === "CreateRoom" ? "bg-defaultYellow text-card" : "bg-card  text-snowWhite"} px-2 h-8 rounded-md`} onClick={() => toggleRoomAction("CreateRoom")}> Create Room</button>
+                    <button className={`text-lg font-bold   ${ActiveTab === "JoinRoom" ? "bg-defaultYellow text-card" : "bg-card  text-snowWhite"} px-2 h-8 rounded-md`} onClick={() => toggleRoomAction("JoinRoom")}> Join Room</button>
 
                 </div>
                 <ElementToAppear onClickHandler={props.onClickHandler} />
