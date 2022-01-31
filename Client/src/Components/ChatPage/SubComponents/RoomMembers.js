@@ -2,9 +2,9 @@ import React from 'react';
 
 const MembersCard = (props) => {
   return <>
-  <div className=' text-snowWhite my-3  w-2/3 p-2  bg-layer1-800 rounded-lg flex justify-around items-center'>
-    <span className='text-lg font-medium'>{props.name}</span>
-    <span className='text-sm font-normal '>#{props.id}</span>
+  <div className=' text-snowWhite my-3  w-2/4 p-2  bg-layer1-300 rounded-lg flex justify-center gap-8 items-center'>
+    <span className='text-lg font-semibold'>{props.name}</span>
+    <span className='text-xs font-semibold  bg-defaultYellow text-card px-3  py-1 rounded-md'>#{props.id}</span>
   </div>
   </>
   

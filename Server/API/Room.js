@@ -102,4 +102,32 @@ router.get("/getRoom/:RoomId", async (req, res) => {
 })
 
 
+
+// Find Room To Join 
+router.get("/findRoom/:RoomId", async (req, res) => {
+    try {
+        const room = await Room.findOne({
+            RoomId: req.params.RoomId
+        }).select('name RoomId')
+
+        if (room) {
+            res.json({
+                status: "ok",
+                roomData:room 
+            })
+        }
+        else{
+            res.json({
+                status:"error",
+                message:"No Results Found"
+            })
+        }
+    } catch (error) {
+        res.json({
+            status:"error",
+            error:error
+        })
+    }
+})
+
 export default router;
