@@ -58,10 +58,6 @@ router.post("/addUser/new", async (req, res) => {
     }
 });
 
-//   // api routing
-//   Router.get("/", (req, res) => {
-//     res.status(200).send("hello working....");
-//   });
 
 // login
 

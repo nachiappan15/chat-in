@@ -11,9 +11,9 @@ const YellowNav = (props) => {
         <GrFormPrevious />
       </span>
       <span className="font-bold text-card  ">{props.name}</span>
-      <span className="text-xs font-bold text-layer1-100 bg-white  px-4 rounded-lg py-1">
+     {props.id &&  <span className="text-xs font-bold text-layer1-100 bg-white  px-4 rounded-lg py-1">
        {props.id}
-      </span>
+      </span>}
       <div className="cursor-pointer"  onClick={props.elementAppear} >
       <BsPeopleFill/> 
       </div>

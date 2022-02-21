@@ -27,14 +27,13 @@ const ChatPage = () => {
 
 
   //  Create room
-  const [FloatingCardRender, setFloatingCardRender] = React.useState(false);
 
 
   // USEEFFECT
   React.useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:9000/api/user/data/${id} `
+      url: `https://chatin-server.herokuapp.com/api/user/data/${id} `
 
     })
       .then(function (response) {
@@ -43,16 +42,13 @@ const ChatPage = () => {
           setUserDetails(userData)
         }
       });
-    setSocket(io.connect("http://localhost:9000"))
+    setSocket(io.connect("https://chatin-server.herokuapp.com/"))
   }, [])
 
 
 
   // actions
-  const elementAppear = (content) => {
-    // console.log(content);
-    setFloatingCardRender(prev => !prev)
-  }
+
 
  
 
@@ -63,7 +59,7 @@ const ChatPage = () => {
 
 
   const ActiveChatElement = () => {
-    return activeChatId && <ChatSide chatRoomId={activeChatId} socket={socket} userName={userDetails.name} FloatingCardRender={elementAppear} />
+    return activeChatId && <ChatSide chatRoomId={activeChatId} socket={socket} userName={userDetails.name}  />
   }
 
 
@@ -77,14 +73,14 @@ const ChatPage = () => {
             {/* left side */}
             <div className="h-full w-3/12   flex flex-col items-center gap-3 py-2 ">
               {/* user Details */}
-              <UserDetails name={userDetails.name} id={userDetails.id} elementAppear={elementAppear} />
+              <UserDetails name={userDetails.name} id={userDetails.id}  />
               {/* lower part */}
               <RoomsListContainer rooms={userDetails.roomsData} changeActiveChat={changeActiveChat} />
             </div>
             {/* right side */}
             <ActiveChatElement />
 
-            {FloatingCardRender && <RoomActions onClickHandler = {elementAppear}/>}
+            
           </div>
         </div>
       }

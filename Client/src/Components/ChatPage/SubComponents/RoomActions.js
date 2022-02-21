@@ -33,7 +33,7 @@ const CreateRoomElements = (props) => {
         event.preventDefault();
         await axios({
             method: "post",
-            url: "http://localhost:9000/room/new",
+            url: "https://chatin-server.herokuapp.com/room/new",
             data: roomData,
         })
             .then(function (response) {
@@ -118,7 +118,7 @@ const JoinRoomElement = (props) => {
         event.preventDefault();
         await axios({
             method: "get",
-            url: `http://localhost:9000/room/findRoom/${roomId}`,
+            url: `https://chatin-server.herokuapp.com/room/findRoom/${roomId}`,
         })
             .then(function (response) {
                 console.log(response.data.roomData);
@@ -146,7 +146,7 @@ const JoinRoomElement = (props) => {
         const Join = async (roomId) => {
             await axios({
                 method: "put",
-                url: `http://localhost:9000/room/joinRoom`,
+                url: `https://chatin-server.herokuapp.com/room/joinRoom`,
                 data:
                 {
                     RoomId: roomId,
