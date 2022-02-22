@@ -106,7 +106,7 @@ const ChatSide = (props) => {
       e.target.children[0].children[0].value = "";
       await axios({
         method: "put",
-        url: "http://localhost:9000/api/message/send",
+        url: "https://chatin-server.herokuapp.com/api/message/send",
         data: messageData,
       })
         .then(function (response) {
@@ -128,7 +128,7 @@ const ChatSide = (props) => {
 
 
   return (
-    <div className="h-full   w-9/12  flex flex-col items-center gap-4">
+    <div className="h-full w-700 md:w-9/12  flex flex-col items-center gap-4">
       <YellowNav
         name={roomData.name}
         id={roomData.RoomId}

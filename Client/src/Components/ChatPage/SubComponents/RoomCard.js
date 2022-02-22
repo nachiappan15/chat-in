@@ -6,8 +6,8 @@ const RoomCard = (props) => {
         <div className=" w-full lg:px-5 px-2 lg:py-2 py-1 flex flex-col bg-layer1-600  text-snowWhite rounded-md hover:bg-defaultYellow hover:text-card  hover:rounded-lg cursor-pointer"  onClick={()=>{props.changeActiveChat(props.RoomId)}} >
           {/* freined details */}
           <div className="flex justify-between items-center h-8">
-              <p className="lg:text-lg md:text-sm  text-lg  font-bold ">{props.name}</p>
-              <p className="lg:text-sm md:text-xs text-sm font-medium text-slate-600">{props.RoomId}</p>
+              <p className="lg:text-lg text-sm   font-bold ">{props.name}</p>
+              <p className="lg:text-sm text-xs  font-medium text-black bg-snowWhite py-1 px-1 rounded-md">{props.RoomId}</p>
           </div>
                 {/* <div className="w-full flex justify-between gap-4">
                     <div className="lg:text-xs  md:text-tiny text-sm 
