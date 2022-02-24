@@ -2,7 +2,7 @@ import React from "react";
 
 import { GrFormPrevious } from "react-icons/gr";
 import {BsPeopleFill} from "react-icons/bs"
-import {BiDotsVerticalRounded} from "react-icons/bi"
+// import {BiDotsVerticalRounded} from "react-icons/bi"
 
 const YellowNav = (props) => {
   return (

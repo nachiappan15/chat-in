@@ -29,8 +29,8 @@ const ChatPage = () => {
 
 
   // USEEFFECT
-  React.useEffect(async() => {
-   await axios({
+  React.useEffect(() => {
+    axios({
       method: 'get',
       url: `https://chatin-server.herokuapp.com/api/user/data/${id} `
 

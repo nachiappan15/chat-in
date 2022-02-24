@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 const MessageCard = (props) => {
   var {id}= useParams()   
   var sent = false;
-  if(props.sentBy == id){
+  if(props.sentBy === id){
     sent = true
   }
   return (

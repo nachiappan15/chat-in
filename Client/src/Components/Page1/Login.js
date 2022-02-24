@@ -1,5 +1,6 @@
+
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import axios from "axios";
 // image
 import login from "../../images/login.svg";
@@ -8,6 +9,7 @@ import Navbar from "../ReusableComponents/Navbar";
 
 
 const Login = () => {
+  let navigate  = useNavigate();
   // state management
   const [loginData, setLoginData] = React.useState({
     email: "",
@@ -25,7 +27,6 @@ const Login = () => {
 
   // login function
   const loginUser = async (e) => {
-    console.log(loginData)
     e.preventDefault();
     // console.log("logging function");
     // axios.get()
@@ -39,7 +40,9 @@ const Login = () => {
         if (data.user) {
           setPasswordAlert("");
           var userId = data.userId;
-          window.location.href = `chat/${userId}`
+          console.log(userId);
+          navigate(`/chat/${userId}`);
+          
         } else {
           console.log(data);
           setPasswordAlert(data.message)
@@ -117,4 +120,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login
