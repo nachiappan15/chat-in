@@ -128,13 +128,14 @@ const ChatSide = (props) => {
 
 
   return (
-    <div className="h-full w-700 md:w-9/12  flex flex-col items-center gap-4">
+    <div className="h-full w-full md:w-9/12  flex flex-col md:items-center md:gap-4">
       <YellowNav
         name={roomData.name}
         id={roomData.RoomId}
         elementAppear={elementAppear}
+        closeChat = {props.closeChat}
       />
-      <div className="w-95 h-56 flex-auto  mb-4 bg-layer1-500 rounded-lg flex flex-col ">
+      <div className="md:w-95 h-56 flex-auto    md:mb-4 bg-layer1-500 rounded-lg flex flex-col ">
         <div className="  h-full flex  flex-col-reverse   lg:mx-8 md:mx-2  px-2 flex-nowrap overflow-scroll">
 
 
@@ -145,7 +146,7 @@ const ChatSide = (props) => {
 
         </div>
         <form
-          className=" h-10 lg:mx-8 md:mx-2 my-2  rounded-xl bg-white flex flex-nowrap justify-evenly overflow-hidden outline-none"
+          className=" h-10 lg:mx-8 md:mx-2 md:my-2  md:rounded-xl bg-white flex flex-nowrap justify-evenly overflow-hidden outline-none"
           onSubmit={sendMessage}
         >
           <span className="w-full">

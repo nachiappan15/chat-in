@@ -12,6 +12,10 @@ import io from "socket.io-client"
 
 const ChatPage = () => {
 
+
+  // mobile view managing state
+  const [mobileViewChatSide , setMobileViewChatSide] = React.useState(false)
+
   const { id } = useParams();
 
   // stateManagement
@@ -52,15 +56,21 @@ const ChatPage = () => {
  
 
   const changeActiveChat = (RoomId) => {
+    setMobileViewChatSide(true)
     setActiveChatId(RoomId)
   }
 
+  const closeChat = () => {
+    setMobileViewChatSide(false)
+    setActiveChatId("")
+  }
 
 
   const ActiveChatElement = () => {
-    return activeChatId && <ChatSide chatRoomId={activeChatId} socket={socket} userName={userDetails.name}  />
+    return activeChatId && <ChatSide chatRoomId={activeChatId} socket={socket} userName={userDetails.name} closeChat = {closeChat}  />
   }
 
+  
 
 
   return (
@@ -70,14 +80,14 @@ const ChatPage = () => {
           <div className=" h-full w-full  flex ">
             {/* tablet and mobile view */}
             {/* left side */}
-            <div className="h-full w-mobile-width md:w-3/12  flex flex-col items-center gap-3 py-2 ">
+            <div className={`h-full  md:w-3/12 w-full  flex flex-col items-center gap-3 py-2 md:flex  ${mobileViewChatSide ? `hidden`:`block`}`}>
               {/* user Details */}
               <UserDetails name={userDetails.name} id={userDetails.id}  />
               {/* lower part */}
-              <RoomsListContainer rooms={userDetails.roomsData} changeActiveChat={changeActiveChat} />
+              <RoomsListContainer rooms={userDetails.roomsData} changeActiveChat={changeActiveChat}  />
             </div>
             {/* right side */}
-            <ActiveChatElement />
+            <ActiveChatElement  />
 
             
           </div>

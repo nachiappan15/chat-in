@@ -2,8 +2,8 @@ import React from "react";
 
 // icons
 import {FaPlus, FaUserAlt} from "react-icons/fa"
-import {AiFillSetting} from "react-icons/ai"
-import {IoNotificationsSharp } from "react-icons/io5"
+// import {AiFillSetting} from "react-icons/ai"
+// import {IoNotificationsSharp } from "react-icons/io5"
 import RoomActions from "./RoomActions";
 
 
