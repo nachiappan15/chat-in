@@ -36,7 +36,7 @@ const ChatPage = () => {
   React.useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:9000/api/user/data/${id} `
+      url: `https://chatin-server.herokuapp.com/api/user/data/${id} `
 
     })
       .then(function (response) {
@@ -45,7 +45,7 @@ const ChatPage = () => {
           setUserDetails(userData)
         }
       });
-    setSocket(io.connect("http://localhost:9000/"))
+    setSocket(io.connect("https://chatin-server.herokuapp.com/"))
     
   }, [])
 

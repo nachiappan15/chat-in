@@ -50,7 +50,7 @@ const ChatSide = (props) => {
     // making api call for room
     axios({
       method: 'get',
-      url: `http://localhost:9000/room/getRoom/${props.chatRoomId}`
+      url: `https://chatin-server.herokuapp.com/room/getRoom/${props.chatRoomId}`
 
     })
       .then(function (response) {
@@ -106,7 +106,7 @@ const ChatSide = (props) => {
       e.target.children[0].children[0].value = "";
       await axios({
         method: "put",
-        url: "http://localhost:9000/api/message/send",
+        url: "https://chatin-server.herokuapp.com/api/message/send",
         data: messageData,
       })
         .then(function (response) {
