@@ -2,6 +2,7 @@ import Express from "express"
 import shortid from "shortid";
 
 
+import { io } from "../index.js";
 const router = Express.Router()
 
 // Database Models
@@ -43,8 +44,13 @@ router.post("/new", async (req, res) => {
                     $push: {
                         rooms: room._id,
                     },
+                },
+                {
+                    new:true
                 }
-            );
+            ).populate("rooms");
+
+
             const updatedFriend = await User.findOneAndUpdate(
                 {
                     id: req.body.Friend,
@@ -53,13 +59,28 @@ router.post("/new", async (req, res) => {
                     $push: {
                         rooms: room._id,
                     },
+                },
+                {
+                    new:true
                 }
-            );
+            ).populate("rooms");
+
+
             res.json({
                 status: "ok",
                 room: room,
                 updatedUserData: [updatedCreator, updatedFriend],
             });
+
+            // socket emit
+            io.emit(`${updatedCreator.id}Render`,{
+               rooms: updatedCreator.rooms
+              })
+            io.emit(`${updatedFriend.id}Render`,{
+                rooms: updatedFriend.rooms
+               })
+
+
         } catch (error) {
             res.json({ status: "error", error: error });
         }
@@ -162,12 +183,17 @@ router.put("/joinRoom", async (req, res) => {
                     $push : {
                         rooms:room._id
                     }
-                }) 
+                } , {
+                    new:true
+                }).populate("rooms") 
                 res.json({
                     status:"ok", 
                     updatedRoom,
                     updateUser
                 })
+                io.emit(`${updateUser.id}Render`,{
+                    rooms: updateUser.rooms
+                   })
             } catch (error) {
                 
             }

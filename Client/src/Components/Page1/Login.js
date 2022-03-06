@@ -32,7 +32,7 @@ const Login = () => {
     // axios.get()
     await axios({
       method: "post",
-      url: "https://chatin-server.herokuapp.com/auth/login",
+      url: "http://localhost:9000/auth/login",
       data: loginData,
     })
       .then(function (response) {

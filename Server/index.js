@@ -29,7 +29,7 @@ const port =process.env.PORT || 9000;
 
 // socket.io
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
+export const io = new Server(server, { cors: { origin: '*' } });
 
 
 io.on("connection", (socket) => {

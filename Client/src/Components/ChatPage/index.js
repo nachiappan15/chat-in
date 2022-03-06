@@ -36,7 +36,7 @@ const ChatPage = () => {
   React.useEffect(() => {
     axios({
       method: 'get',
-      url: `https://chatin-server.herokuapp.com/api/user/data/${id} `
+      url: `http://localhost:9000/api/user/data/${id} `
 
     })
       .then(function (response) {
@@ -45,12 +45,23 @@ const ChatPage = () => {
           setUserDetails(userData)
         }
       });
-    setSocket(io.connect("https://chatin-server.herokuapp.com/"))
+    setSocket(io.connect("http://localhost:9000/"))
+    
   }, [])
 
-
+  socket && socket.on(`${id}Render` , (data)=> {
+    setUserDetails(prev => {
+      return {
+        ...prev ,
+        roomsData : data.rooms
+      }
+    
+    })
+    console.log(data);
+  })
 
   // actions
+  
 
 
  
