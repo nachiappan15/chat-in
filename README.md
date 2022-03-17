@@ -3,7 +3,7 @@
 A Chat Application allows users to create and join chat rooms.
 
 Technologies used:
----  React JS
+  ---  React JS
 ---  Tailwind CSS
 ---  Node JS
 ---  Express JS
