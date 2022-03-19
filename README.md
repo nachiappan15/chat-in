@@ -1,4 +1,4 @@
-# chat-in  
+# Chat In  
 
 A Chat Application allows users to create and join chat rooms.
 
