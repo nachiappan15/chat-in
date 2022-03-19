@@ -1,4 +1,5 @@
-# Chat In  
+# Chat In  ![plot](./)
+
 
 A Chat Application allows users to create and join chat rooms.
 
