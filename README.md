@@ -1,4 +1,4 @@
-# Chat In  ![alt text](https://github.com/nachiappan15/chat-in/blob/main/Client/src/images/logo.png)
+ ![alt text](https://github.com/nachiappan15/chat-in/blob/main/Client/src/images/logo.png)
 
 
 A Chat Application allows users to create and join chat rooms.
