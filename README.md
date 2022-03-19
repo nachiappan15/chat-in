@@ -1,4 +1,4 @@
-# Chat In  ![plot](../Client/src/images/logo.png)
+# Chat In  (![alt text](http://url/to/img.png))
 
 
 A Chat Application allows users to create and join chat rooms.
