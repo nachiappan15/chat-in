@@ -5,10 +5,15 @@ import axios from "axios";
 // image
 import login from "../../images/login.svg";
 import Navbar from "../ReusableComponents/Navbar";
+import Loading from "../ReusableComponents/Loading";
 
 
 
 const Login = () => {
+
+  // loading component state
+  const [loadingRender , setLoadingRender] = React.useState(false);
+
   let navigate  = useNavigate();
   // state management
   const [loginData, setLoginData] = React.useState({
@@ -30,12 +35,14 @@ const Login = () => {
     e.preventDefault();
     // console.log("logging function");
     // axios.get()
+    setLoadingRender(true);
     await axios({
       method: "post",
       url: "https://chatin-server.herokuapp.com/auth/login",
       data: loginData,
     })
       .then(function (response) {
+        setLoadingRender(false);
         var data = response.data;
         if (data.user) {
           setPasswordAlert("");
@@ -56,7 +63,9 @@ const Login = () => {
 
 
   return (
-    <div className="h-full w-full flex flex-col md:flex-row gap-2 md:gap-0  ">
+    <div className="h-full w-full flex flex-col md:flex-row gap-2 md:gap-0 relative ">
+     { loadingRender && 
+     <Loading/>}
       {/*navbar for small device */}
       <div className="block md:hidden mt-5">
         <Navbar />

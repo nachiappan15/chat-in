@@ -5,8 +5,16 @@ import axios from "axios";
 // images
 import signUpImage from "../../images/signup.svg";
 import Navbar from "../ReusableComponents/Navbar";
+import Loading from "../ReusableComponents/Loading";
 
 const SignUp = () => {
+
+  // loading component state
+  const [loadingRender, setLoadingRender] = React.useState(false);
+
+  const [paswordAlert, setPasswordAlert] = React.useState("")
+
+
   // state management
   const [signupData, setSignupData] = React.useState({
     name: "",
@@ -20,9 +28,10 @@ const SignUp = () => {
     });
   };
 
-// actions
+  // actions
   const RegisterUser = async (event) => {
     event.preventDefault();
+    setLoadingRender(true);
 
     await axios({
       method: "post",
@@ -30,12 +39,14 @@ const SignUp = () => {
       data: signupData,
     })
       .then(function (response) {
+        setLoadingRender(false);
         var data = response.data;
         if (data.user) {
           var user = data.user;
           window.location.href = `chat/${user}`;
         } else {
           console.log(data.error);
+          setPasswordAlert("User Email Exist Try login")
         }
       })
       .catch(function (error) {
@@ -44,9 +55,13 @@ const SignUp = () => {
   };
 
 
-  
+
   return (
-    <div className="h-full w-full flex flex-col md:flex-row gap-2 md:gap-0  ">
+    <div className="h-full w-full flex flex-col md:flex-row gap-2 md:gap-0  relative">
+      {loadingRender &&
+        <Loading />}
+
+
       {/* avbar for small device */}
       <div className="block md:hidden mt-5">
         <Navbar />
@@ -110,6 +125,9 @@ const SignUp = () => {
                 </span>
               </Link>
             </span>
+            {paswordAlert && <div className=" w-full text-center text-red-500">
+              <h2>{paswordAlert}</h2>
+            </div>}
           </div>
         </form>
       </div>
